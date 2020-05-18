@@ -7,22 +7,22 @@ var Details = require('../models/details');
 router.get('/',checkAuthenticated, (req,res,next)=>{
     async.parallel({
         notes: (callback)=>{
-            Details.find({type:'note', deleteDate:null, archived:"false"})
+            Details.find({type:'note', deleteDate:null, archived:"false", userID: req.user._id})
             .populate('noteID')
             .exec(callback)
         },
         list: (callback)=>{
-            Details.find({type:'list', deleteDate:null, archived:"false"})
+            Details.find({type:'list', deleteDate:null, archived:"false", userID: req.user._id})
             .populate('listID')
             .exec(callback)
         },
         draw: (callback)=>{
-            Details.find({type:'draw', deleteDate:null, archived:"false"})
+            Details.find({type:'draw', deleteDate:null, archived:"false", userID: req.user._id})
             .populate('drawID')
             .exec(callback)
         },
         photo: (callback)=>{
-            Details.find({type:'draw', deleteDate:null, archived:"false"})
+            Details.find({type:'photo', deleteDate:null, archived:"false", userID: req.user._id})
             .populate('photoID')
             .exec(callback)
         }

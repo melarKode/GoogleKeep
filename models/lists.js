@@ -1,20 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var todoSchema = new Schema({
-    item:{
-        type:String,
-        required: true
-    },
-    completed:{
-        type: Boolean,
-        required: true,
-        default: false
-    }
-},{
-    timestamps: true
-});
-
 var listSchema = new Schema({
     userID:{
         type: mongoose.Schema.Types.ObjectId,
@@ -24,8 +10,20 @@ var listSchema = new Schema({
         type:String
     },
     todo:[{
-        todoSchema
-    }]
+        item:{
+            type:String,
+            required: true
+        },
+        completed:{
+            type: Boolean,
+            required: true,
+            default: false
+        }
+    }],
+    deleted:{
+        type: Boolean,
+        default: false
+    }
 },{
    timestamps:true 
 });

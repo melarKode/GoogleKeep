@@ -6,7 +6,7 @@ const http = require('http');
 const logger = require('morgan');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
-const connect = mongoose.connect(process.env.MONGO_URL, {useUnifiedTopology:true, useNewUrlParser:true, useCreateIndex: true});
+const connect = mongoose.connect(process.env.MONGO_URL, {useUnifiedTopology:true, useNewUrlParser:true, useCreateIndex: true, useFindAndModify:false});
 connect.then((db)=>{
     console.log('Connected to database');
     },(err)=>{
@@ -18,6 +18,7 @@ const userRouter = require('./routes/userRouter');
 const homeRouter = require('./routes/homeRouter');
 const noteRouter = require('./routes/noteRouter');
 const listRouter = require('./routes/listRouter');
+const trashRouter = require('./routes/trashRouter');
 const port = 4000;
 
 const app = express();
@@ -53,6 +54,7 @@ app.use('/user',userRouter);
 app.use('/home',homeRouter);
 app.use('/note',noteRouter);
 app.use('/list',listRouter);
+app.use('/trash',trashRouter);
 
 app.set('port', port);
 const server = http.createServer(app);

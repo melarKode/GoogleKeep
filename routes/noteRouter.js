@@ -43,6 +43,76 @@ router.post('/',checkAuthenticated, (req,res,next)=>{
     })
 });
 
+router.get('/:noteid',checkAuthenticated, (req,res,next)=>{
+    Notes.findById(req.params.noteid)
+    .exec((err,note)=>{
+        if(err){
+            return next(err);
+        }
+        res.statusCode = 200;
+        res.setHeader('Content-Type','application/json');
+        res.json(note);
+    });
+});
+
+router.post('/:noteid',checkAuthenticated,(req,res,next)=>{
+    Notes.findByIdAndUpdate(req.params.noteid,{
+        $set:{
+            title: req.body.title,
+            body: req.body.body
+        }
+    },{
+        new:true
+    })
+    .then((note)=>{
+        var archive = ((req.body.archived)?true:false);
+        Details.findOneAndUpdate({noteID: req.params.noteid},{
+            $set:{
+                archived: archive
+            }
+        },{
+            new:true
+        })
+        .then((detail)=>{
+            res.statusCode = 200;
+            res.setHeader('Content-Type','application/json');
+            var json = {
+                note: note,
+                detail: detail
+            }
+            res.json(json);
+        })
+    })
+});
+
+router.delete('/:noteid',checkAuthenticated,(req,res,next)=>{
+    Notes.findByIdAndUpdate(req.params.noteid,{
+        $set:{
+            deleted: true
+        }
+    },{
+        new:true
+    })
+    .then((note)=>{
+        Details.findOneAndUpdate({noteID: req.params.noteid},{
+            $set:{
+                deleteDate: Date.now()
+            }
+        },{
+            new:true
+        })
+        .then((detail)=>{
+            res.statusCode = 200;
+            res.setHeader('Content-Type','application/json');
+            var json = {
+                note: note,
+                detail: detail
+            }
+            res.json(json);
+        })
+    })
+})
+
 function checkAuthenticated(req,res,next){
     if(req.isAuthenticated()){
         return next();

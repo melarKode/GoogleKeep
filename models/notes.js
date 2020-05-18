@@ -12,6 +12,10 @@ var notesSchema = new Schema({
     },
     body:{
         type: String
+    },
+    deleted:{
+        type: Boolean,
+        default:false
     }
 },{
     timestamps: true

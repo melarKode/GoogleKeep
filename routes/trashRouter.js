@@ -8,32 +8,32 @@ const async = require('async');
 router.get('/',checkAuthenticated, (req,res,next)=>{
     async.series({
         deleteDetailNote: (callback)=>{
-            Details.find({deleteDate:{$ne:null}, type:'note', deleteDate:{$lte: new Date(Date.now() - 10000)}})
+            Details.find({deleteDate:{$ne:null}, type:'note', deleteDate:{$lte: new Date(Date.now() - 1000*60*60*24*7)}, userID: req.user._id})
             .deleteMany()
             .exec(callback)
         },
         deleteNote: (callback)=>{
-            Notes.find({userID:req.user._id, updatedAt:{$lte: new Date(Date.now() - 10000)}, deleted:true})
+            Notes.find({userID:req.user._id, updatedAt:{$lte: new Date(Date.now() - 1000*60*60*24*7)}, deleted:true, userID: req.user._id})
             .deleteMany()
             .exec(callback)
         },  
         deleteDetailList: (callback)=>{
-            Details.find({deleteDate:{$ne:null}, type:'list', deleteDate:{$lte: new Date(Date.now() - 10000)}})
+            Details.find({deleteDate:{$ne:null}, type:'list', deleteDate:{$lte: new Date(Date.now() - 1000*60*60*24*7)}, userID: req.user._id})
             .deleteMany()
             .exec(callback)
         },
         deleteList: (callback)=>{
-            Lists.find({userID:req.user._id, updatedAt:{$lte: new Date(Date.now() - 10000)}, deleted:true})
+            Lists.find({userID:req.user._id, updatedAt:{$lte: new Date(Date.now() - 1000*60*60*24*7)}, deleted:true, userID: req.user._id})
             .deleteMany()
             .exec(callback)
         },  
         displayNote: (callback)=>{
-            Details.find({deleteDate:{$ne:null}, type:'note', deleteDate:{$gte: new Date(Date.now() - 10000)}})
+            Details.find({deleteDate:{$ne:null}, type:'note', deleteDate:{$gte: new Date(Date.now() - 1000*60*60*24*7)}, userID: req.user._id})
             .populate('noteID')
             .exec(callback)
         },
         displayList: (callback)=>{
-            Details.find({deleteDate:{$ne:null}, type:'list', deleteDate:{$gte: new Date(Date.now() - 10000)}})
+            Details.find({deleteDate:{$ne:null}, type:'list', deleteDate:{$gte: new Date(Date.now() - 1000*60*60*24*7)}, userID: req.user._id})
             .populate('listID')
             .exec(callback)
         }
@@ -45,6 +45,38 @@ router.get('/',checkAuthenticated, (req,res,next)=>{
             res.setHeader('Content-Type','application/json');
             res.json(result);
         }
+    })
+});
+
+router.delete('/',checkAuthenticated, (req,res,next)=>{
+    async.series({
+        deleteDetailNote: (callback)=>{
+            Details.find({deleteDate:{$ne:null}, type:'note', userID: req.user._id})
+            .deleteMany()
+            .exec(callback)
+        },
+        deleteNote: (callback)=>{
+            Notes.find({userID:req.user._id, deleted:true})
+            .deleteMany()
+            .exec(callback)
+        },  
+        deleteDetailList: (callback)=>{
+            Details.find({deleteDate:{$ne:null}, type:'list', userID: req.user._id})
+            .deleteMany()
+            .exec(callback)
+        },
+        deleteList: (callback)=>{
+            Lists.find({userID:req.user._id, deleted:true})
+            .deleteMany()
+            .exec(callback)
+        }
+    },(err,result)=>{
+        if(err){
+            return next(err);
+        }
+        res.statusCode = 200;
+        res.setHeader('Content-Type','application/json');
+        res.json(result);
     })
 })
 

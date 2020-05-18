@@ -18,6 +18,7 @@ const userRouter = require('./routes/userRouter');
 const homeRouter = require('./routes/homeRouter');
 const noteRouter = require('./routes/noteRouter');
 const listRouter = require('./routes/listRouter');
+const drawRouter = require('./routes/drawRouter');
 const trashRouter = require('./routes/trashRouter');
 const port = 4000;
 
@@ -54,6 +55,7 @@ app.use('/user',userRouter);
 app.use('/home',homeRouter);
 app.use('/note',noteRouter);
 app.use('/list',listRouter);
+app.use('/draw',drawRouter);
 app.use('/trash',trashRouter);
 
 app.set('port', port);

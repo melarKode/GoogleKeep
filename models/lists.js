@@ -28,6 +28,11 @@ var listSchema = new Schema({
    timestamps:true 
 });
 
+listSchema.virtual('url')
+.get(function(){
+    return '/list/'+this._id;
+})
+
 var List = mongoose.model('lists',listSchema);
 
 module.exports = List;

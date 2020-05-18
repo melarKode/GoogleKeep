@@ -50,6 +50,7 @@ var detailsSchema = new Schema({
     timestamps:true
 });
 
+
 var Details = mongoose.model('details', detailsSchema);
 
 module.exports = Details;

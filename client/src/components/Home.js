@@ -14,9 +14,9 @@ class Home extends Component{
             this.setState({
                 data
             },()=>{
-                console.log('Data fetched ',data);
             })
         })
+        
     }
 
     render(){

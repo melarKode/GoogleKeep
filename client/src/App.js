@@ -6,6 +6,7 @@ import Note from './components/Note';
 import List from './components/List';
 import Login from './components/Login';
 import Register from './components/Register';
+import Logout from './components/Logout';
 
 class App extends Component {
   render() {
@@ -14,7 +15,7 @@ class App extends Component {
       <Switch>
           <Route path='/user/register' component={Register} />
           <Route path='/user/login' component={Login} />
-          <Route path='/user/logout' component={Login} />
+          <Route path='/user/logout' component={Logout} />
           <div className="app">
           <Navbar />
           <Route path='/home' component={Home} />

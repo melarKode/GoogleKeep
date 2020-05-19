@@ -21,7 +21,6 @@ class Login extends Component{
         e.preventDefault();
         axios.post('/user/login', this.state)
             .then((response)=>{
-                console.log(response)
                 if(response.data.error){
                     this.setState({
                         error: response.data.error,
@@ -44,17 +43,11 @@ class Login extends Component{
             })
     }
     componentDidMount(){
-        axios.get('/user/login')
+        axios.get('/user/logout')
             .then((response)=>{
-                console.log(response);
-                if(response){
-                    this.setState({
-                        redirect:true
-                    })
-                }
-            })
-            .catch((err)=>{
-                console.log(err);
+                this.setState({
+                    error: 'Please sign in to continue.'
+                })
             })
     }
     render(){

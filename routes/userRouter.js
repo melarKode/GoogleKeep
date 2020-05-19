@@ -6,18 +6,16 @@ const passport = require('passport');
 router.get('/register',checkNotAuthenticated,(req,res,next)=>{
     res.statusCode=200;
     res.setHeader('Content-Type', 'application/json');
-    res.json({'msg':'Registration Page'});
+    res.json({msg:'Registration Page'});
 })
 
 router.post('/register', (req,res,next)=>{
     if(req.body.password!==req.body.password2){
-        var err = new Error('Passwords do not match');
-        err.status = 401;
-        return next(err);
+        return res.send({error:'Passwords do not match'});
     }else{
         User.register( new User({username: req.body.username}),req.body.password,(err,user)=>{
             if(err){
-                return next(err);
+                return res.send({error:'Username already exists'})
             }else{
                 user.first_name = req.body.first_name;
                 user.last_name = req.body.last_name;
@@ -29,7 +27,8 @@ router.post('/register', (req,res,next)=>{
                     passport.authenticate('local')(req,res,()=>{
                         res.statusCode = 200;
                         res.setHeader('Content-Type', 'application/json');
-                        res.json(user);
+                        res.json(req.user);
+                        res.redirect('/user/logout');
                     });
                 });
             };
@@ -40,7 +39,6 @@ router.post('/register', (req,res,next)=>{
 router.get('/login',checkNotAuthenticated,(req,res,next)=>{
     res.statusCode=200;
     res.setHeader('Content-Type', 'application/json');
-    res.json({'msg':'Login Page'});
 })
 
 router.post('/login', passport.authenticate('local'),(req,res,next)=>{
@@ -49,9 +47,7 @@ router.post('/login', passport.authenticate('local'),(req,res,next)=>{
         res.setHeader('Content-Type','application/json');
         res.json(req.user);
     }else{
-        var err = new Error('Could not Login');
-        err.status = 503;
-        return next(err);
+        return res.send(503,{error:'Username or password is incorrect'});
     }
 });
 
@@ -59,7 +55,7 @@ router.get('/logout',checkAuthenticated, (req,res,next)=>{
     req.logout();
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    res.json({msg:'Logged out successfully'});
+    res.send({msg:'Logged out successfully'});
 })
 
 function checkAuthenticated(req,res,next){

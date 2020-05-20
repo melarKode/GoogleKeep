@@ -8,6 +8,7 @@ class Navbar extends Component {
             <div>
                 <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet" />
                 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet" />
+                
                 <div className="sidehoverbar"> 
                     <NavLink to="/home" className="home">
                         Home

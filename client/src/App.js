@@ -13,15 +13,15 @@ class App extends Component {
     return (
       <BrowserRouter>
       <Switch>
-          <Route path='/user/register' component={Register} />
-          <Route path='/user/login' component={Login} />
-          <Route path='/user/logout' component={Logout} />
-          <div className="app">
-          <Navbar />
+        <Route path='/user/register' component={Register} />
+        <Route path='/user/login' component={Login} />
+        <Route path='/user/logout' component={Logout} />
+        <Navbar />
+      </Switch>
+      <Switch>  
           <Route path='/home' component={Home} />
           <Route path='/note' component={Note} />
-          <Route path='/list' component={List} />
-          </div>
+          <Route path='/list' component={List} />       
       </Switch>
       </BrowserRouter>
     )

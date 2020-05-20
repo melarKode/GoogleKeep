@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import './css/Login.css';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect,NavLink } from 'react-router-dom';
 
 class Login extends Component{
     constructor(props){
@@ -21,7 +21,6 @@ class Login extends Component{
         e.preventDefault();
         axios.post('/user/login', this.state)
             .then((response)=>{
-                console.log(response)
                 if(response.data.error){
                     this.setState({
                         error: response.data.error,
@@ -43,11 +42,15 @@ class Login extends Component{
                 })
             })
     }
+
+    signUpRedirect(){
+        this.props.history.push('/user/register');
+    }
+
     componentDidMount(){
         axios.get('/user/login')
             .then((response)=>{
-                console.log(response);
-                if(response){
+                if(!response.data['msg']){
                     this.setState({
                         redirect:true
                     })
@@ -74,11 +77,13 @@ class Login extends Component{
                         <br /><br />
                         <button type="submit">Log in</button>
                         <br /><br />
+                        Don't have an account? <NavLink to="/user/register" className="signUpRedirect">Sign up</NavLink>
+                        <br /><br />
                     </div>
                     </form>
                     <div className="alert">
                             {error}
-                        </div>
+                    </div>
                 </div>
         )
     }

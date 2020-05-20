@@ -1,10 +1,15 @@
+.sidehoverbar a.active{
+    opacity: 1; 
+    background-color: #41331C;
+    color: #9AA0A6;
+}
 .sidehoverbar a { 
     margin-left: 0px;
     background-color: #202124; 
     position: absolute; 
     font-size: 22px; 
     text-decoration: none; 
-    color: white; 
+    color: #9AA0A6; 
     padding: 10px; 
     border-radius: 0px 25px 25px 0px; 
     left: -175px; 
@@ -16,6 +21,7 @@
     left: 0px; 
     opacity: 1; 
     background-color: #41331C;
+    color: #E8EAED;
 }
 .sidehoverbar i { 
     float: right; 

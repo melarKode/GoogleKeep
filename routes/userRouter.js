@@ -26,8 +26,6 @@ router.post('/register', (req,res,next)=>{
                     }
                     passport.authenticate('local')(req,res,()=>{
                         res.statusCode = 200;
-                        res.setHeader('Content-Type', 'application/json');
-                        res.json(req.user);
                         res.redirect('/user/logout');
                     });
                 });
@@ -39,6 +37,7 @@ router.post('/register', (req,res,next)=>{
 router.get('/login',checkNotAuthenticated,(req,res,next)=>{
     res.statusCode=200;
     res.setHeader('Content-Type', 'application/json');
+    res.send({'msg':'Login page'});
 })
 
 router.post('/login', passport.authenticate('local'),(req,res,next)=>{
@@ -53,6 +52,7 @@ router.post('/login', passport.authenticate('local'),(req,res,next)=>{
 
 router.get('/logout',checkAuthenticated, (req,res,next)=>{
     req.logout();
+    req.session = null;
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.send({msg:'Logged out successfully'});

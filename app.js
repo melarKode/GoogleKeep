@@ -33,6 +33,7 @@ app.use(session({
     secret: process.env.SECRET_KEY,
     resave:false,
     saveUninitialized: false,
+    unset: "destroy",
     store: new MongoStore({
         url:process.env.MONGO_URL,
         collection: 'sessions'

@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import './css/Register.css';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 
 class Login extends Component{
     constructor(props){
@@ -88,8 +88,10 @@ class Login extends Component{
                         <br />
                         <label htmlFor="password2">Confirm Password: </label>
                         <input placeholder='Confirm Password' spellCheck={false} type="password" name="password2" value={password2} onChange={this.changeHandler} autoComplete="off" required/>
-                        <br /><br /><br /><br />
+                        <br /><br />
                         <button className="register" type="submit">Sign Up</button>
+                        <br /><br />
+                        Have an Account? <NavLink to="/user/login" className="loginRedirect">Log in</NavLink>
                         <br /><br />
                     </div>
                     </form>

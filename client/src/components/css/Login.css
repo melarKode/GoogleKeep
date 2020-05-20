@@ -23,7 +23,7 @@ input {
 
 button{
     align-self: center;
-    margin-left: 75px;
+    margin-left: 120px;
     font-family: 'Work Sans', sans-serif;
     background-color: #F4B606;
     border-radius: 15px;
@@ -40,4 +40,8 @@ button{
     border-radius: 15px;
     align-self: center;
     text-align: center;
+}
+
+.signUpRedirect{
+  color:#F4B606
 }

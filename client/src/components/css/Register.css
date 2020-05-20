@@ -41,3 +41,7 @@ input {
       align-self: center;
       text-align: center;
   }
+
+  .loginRedirect{
+    color: #F4B606;
+  }

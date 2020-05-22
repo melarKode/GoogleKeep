@@ -21,11 +21,6 @@ var notesSchema = new Schema({
     timestamps: true
 });
 
-notesSchema.virtual('url')
-.get(function(){
-    return '/note/'+this._id;
-})
-
 var Note = mongoose.model('notes',notesSchema);
 
 module.exports = Note;

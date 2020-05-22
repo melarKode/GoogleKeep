@@ -4,7 +4,8 @@
   font-family: 'Work Sans', sans-serif;
 }
 
-input {
+.inputUsername,
+.inputPassword {
   height: 30px;
   width: 50%;
   min-width: 50%;
@@ -21,7 +22,7 @@ input {
   font-weight: lighter;
 }
 
-button{
+.buttonSubmit{
     align-self: center;
     margin-left: 120px;
     font-family: 'Work Sans', sans-serif;

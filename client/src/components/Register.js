@@ -72,22 +72,22 @@ class Login extends Component{
                     <form action="/user/login" method="POST" onSubmit={this.submitHandler}>
                     <div className='register-input-wrapper'>
                         <label htmlFor="first_name">First Name: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input placeholder='First Name' spellCheck={false} type="text" name="first_name" value={first_name} onChange={this.changeHandler} autoComplete="off" required/>
+                        <input placeholder='First Name' spellCheck={false} className="inputRegister" type="text" name="first_name" value={first_name} onChange={this.changeHandler} autoComplete="off" required/>
                         <br />
                         <label htmlFor="last_name">Last Name: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input placeholder="Last Name" spellCheck={false} type="text" name="last_name" value={last_name} onChange={this.changeHandler} autoComplete="off" required/>
+                        <input placeholder="Last Name" spellCheck={false} type="text" className="inputRegister" name="last_name" value={last_name} onChange={this.changeHandler} autoComplete="off" required/>
                         <br /><br />
                         <label htmlFor="email">Email: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input placeholder='Email' spellCheck={false} type="email" name="email" value={email} onChange={this.changeHandler} autoComplete="off" required/>
+                        <input placeholder='Email' spellCheck={false} type="email" className="inputRegister" name="email" value={email} onChange={this.changeHandler} autoComplete="off" required/>
                         <br />
                         <label htmlFor="username">Username: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input placeholder='Username' spellCheck={false} type="text" name="username" value={username} onChange={this.changeHandler} autoComplete="off" required/>
+                        <input placeholder='Username' spellCheck={false} type="text" className="inputRegister" name="username" value={username} onChange={this.changeHandler} autoComplete="off" required/>
                         <br />
                         <label htmlFor="password">Password: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input placeholder='Password' spellCheck={false} type="password" name="password" value={password} onChange={this.changeHandler} autoComplete="off" required/>
+                        <input placeholder='Password' spellCheck={false} type="password" className="inputRegister" name="password" value={password} onChange={this.changeHandler} autoComplete="off" required/>
                         <br />
                         <label htmlFor="password2">Confirm Password: </label>
-                        <input placeholder='Confirm Password' spellCheck={false} type="password" name="password2" value={password2} onChange={this.changeHandler} autoComplete="off" required/>
+                        <input placeholder='Confirm Password' spellCheck={false} className="inputRegister" type="password" name="password2" value={password2} onChange={this.changeHandler} autoComplete="off" required/>
                         <br /><br />
                         <button className="register" type="submit">Sign Up</button>
                         <br /><br />

@@ -48,6 +48,53 @@ router.get('/',checkAuthenticated, (req,res,next)=>{
     })
 });
 
+router.post('/:id',checkAuthenticated, (req,res,next)=>{
+    Details.findByIdAndUpdate(req.params.id,{
+        $set:{
+            deleteDate:null
+        }
+    },{
+        new:true
+    })
+    .then((detail)=>{
+        if(detail.type==='note'){
+            Notes.findByIdAndUpdate(detail.noteID._id,{
+                $set:{
+                    deleted:false
+                }
+            },{
+                new:true
+            },(err,doc)=>{
+                if(err){
+                    res.statusCode=403;
+                    res.send(err);
+                }else{
+                    res.send(doc);
+                }
+            })
+        }else if(detail.type==='list'){
+            Lists.findByIdAndUpdate(detail.listID._id,{
+                $set:{
+                    deleted:false
+                }
+            },{
+                new:true
+            },(err,doc)=>{
+                if(err){
+                    res.statusCode=403;
+                    res.send(err);
+                }else{
+                    res.send(doc);
+                }
+            })
+        }
+    })
+    .catch((err)=>{
+        res.statusCode=403;
+        res.send(err);
+    })
+})
+
 router.delete('/',checkAuthenticated, (req,res,next)=>{
     async.series({
         deleteDetailNote: (callback)=>{

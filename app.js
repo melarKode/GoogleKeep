@@ -2,7 +2,7 @@ if(process.env.NODE_ENV !=="production"){
     require('dotenv').config()
 }
 const express = require('express');
-const http = require('http');
+http = require('http');
 const logger = require('morgan');
 const createError = require('http-errors');
 const mongoose = require('mongoose');

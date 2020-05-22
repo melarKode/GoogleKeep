@@ -20,8 +20,6 @@
     transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 
-
-
   .masonry-list {
     margin:10px;
     padding:5px;
@@ -58,4 +56,17 @@
   
   .box:hover::after {
       opacity: 1;
+  }
+
+  .complete{
+    text-decoration: line-through;
+    list-style: url('./baseline_check_box_white_18dp.png');
+  }
+
+  .incomplete{
+    list-style: url('./baseline_check_box_outline_blank_white_18dp.png');
+  }
+
+  .home-center{
+    text-align: center;
   }

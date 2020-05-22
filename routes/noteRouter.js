@@ -44,10 +44,13 @@ router.post('/',checkAuthenticated, (req,res,next)=>{
 });
 
 router.get('/:noteid',checkAuthenticated, (req,res,next)=>{
-    Notes.findById(req.params.noteid)
+    Details.findOne({noteID: req.params.noteid})
+    .populate('noteID')
     .exec((err,note)=>{
         if(err){
-            return next(err);
+            res.statusCode = 404;
+            res.setHeader('Content-Type', 'application/json');
+            return res.json({error:'Not Found'});
         }
         res.statusCode = 200;
         res.setHeader('Content-Type','application/json');

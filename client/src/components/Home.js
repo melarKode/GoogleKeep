@@ -3,6 +3,8 @@ import Axios from 'axios';
 import { Redirect, NavLink } from 'react-router-dom';
 import './css/Home.css';
 import Masonry from 'react-masonry-component';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 class Home extends Component{
     constructor(){
@@ -18,6 +20,7 @@ class Home extends Component{
         Axios.get('/home')
         .then((res)=>{
             if(!res.data['msg']){
+                if(res.data['notes'] && res.data['list']){
                 var notes = res.data['notes'].sort((a,b)=>{
                     return new Date(b.updatedAt)-new Date(a.updatedAt);
                 })
@@ -25,6 +28,7 @@ class Home extends Component{
                     return new Date(b.updatedAt) - new Date(a.updatedAt);
                 })
                 this.setState({notes, list})
+            }
             }else if(res.data['msg']){
                 this.setState({
                     redirectBack:true
@@ -38,13 +42,13 @@ class Home extends Component{
     }
 
     render(){
-        var data = []
+        var data = []/* eslint-disable-next-line */
         this.state.notes.map((note)=>{
             data.push(note);
-        })
+        })/* eslint-disable-next-line */
         this.state.list.map((list)=>{
             data.push(list);
-        })
+        })/* eslint-disable-next-line */
         data = data.sort((a,b)=>{
             return new Date(b.updatedAt) - new Date(a.updatedAt);
         })
@@ -52,27 +56,31 @@ class Home extends Component{
             <div className="container">
                 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
                 {this.state.redirectBack && <Redirect push to='/user/login' />}
-                <h1 className="center">Home</h1>
+                <h1 className="home-center">Home</h1>
                 <Masonry
                 className={'masonry-home'} 
                 elementType={'ul'}
-            >
+            >{/* eslint-disable-next-line */}
                 {data.map(function(element){
                 if(element.type==='note'){
                     return (
-                    <NavLink to="/user/login" className="masonry-button" style={{'textDecoration': 'none', 'color':'white'}}>
+                    <NavLink to={'/note/'+element.noteID._id} className="masonry-button" key={element._id} style={{'textDecoration': 'none', 'color':'white'}}>
                         <div className="masonry-note box" key={element.noteID._id}>
-                            {element.noteID.title}
+                            <span style={{'fontWeight':'bold'}}>{element.noteID.title}</span>
                                 <br />
                                 <br />
+                                <p style={{'whiteSpace':'pre-line'}} >
                             {element.noteID.body}
-                            
+                            </p>
+                            <br />
+                            <br />
+                            <Moment className="time" format="D MMM YYYY HH:mm" style={{'fontSize':'10px'}}>{element.updatedAt}</Moment>
                         </div>
                     </NavLink>
                     );
                 }else if(element.type==='list'){
                     return (
-                        <NavLink to="/user/login" className="masonry-button" style={{'text-decoration': 'none', 'color':'white'}}>
+                        <NavLink to={'/list/'+element.listID._id} className="masonry-button" key={element._id} style={{'textDecoration': 'none', 'color':'white'}}>
                         <div className="masonry-list box" key={element.listID._id}>
                             {element.listID.title}
                             <br />
@@ -92,6 +100,9 @@ class Home extends Component{
                                     }
                                 })}
                             </ul>
+                            <br />
+                            <br />
+                            <Moment className="time" format="D MMM YYYY HH:mm" style={{'fontSize':'10px'}}>{element.updatedAt}</Moment>
                         </div>
                         </NavLink>
                     )

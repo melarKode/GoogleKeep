@@ -58,3 +58,22 @@
 .material-icons.material-icons--outlined {
   font-family: 'Material Icons Outlined';
 }
+
+.topnavbar{
+    overflow:hidden;
+    border-bottom: solid #525355;
+}
+
+.topnavbar a{
+    float: right;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Work Sans', sans-serif;
+    text-align: center;
+    margin:10px;
+    display: block;
+    background-color: #F4B606;
+    color:black;
+    border-radius: 20px;
+    padding: 5px;
+}

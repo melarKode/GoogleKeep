@@ -70,12 +70,12 @@ class Login extends Component{
                     <form action="/user/login" method="POST" onSubmit={this.submitHandler}>
                     <div className='input-wrapper'>
                         <label htmlFor="username">Username: </label>
-                        <input placeholder='Username' spellCheck={false} type="text" name="username" value={username} onChange={this.changeHandler} autoComplete="off" required/>
+                        <input placeholder='Username' spellCheck={false} type="text" name="username" className="inputUsername" value={username} onChange={this.changeHandler} autoComplete="off" required/>
                         <br />
                         <label htmlFor="password">Password: </label>&nbsp;
-                        <input placeholder="Password" spellCheck={false} type="password" name="password" value={password} onChange={this.changeHandler} autoComplete="off" required/>
+                        <input placeholder="Password" spellCheck={false} type="password" name="password" className="inputPassword" value={password} onChange={this.changeHandler} autoComplete="off" required/>
                         <br /><br />
-                        <button type="submit">Log in</button>
+                        <button type="submit" className="buttonSubmit">Log in</button>
                         <br /><br />
                         Don't have an account? <NavLink to="/user/register" className="signUpRedirect">Sign up</NavLink>
                         <br /><br />

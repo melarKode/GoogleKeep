@@ -12,7 +12,7 @@
     border-color: #525355;
     border-style: solid;
     min-width: 240px;
-    max-width: 160px;
+    max-width: 240px;
     overflow-wrap: anywhere;
     min-height: 120px;
     font-family: 'Roboto', sans-serif;
@@ -26,8 +26,8 @@
     border-radius: 5px;
     border-color: #525355;
     border-style: solid;
-    max-width: 400px;
-    min-width:200px;
+    max-width: 240px;
+    min-width:240px;
     overflow-wrap: anywhere;
     min-height: 150px;
     font-family: 'Roboto', sans-serif;

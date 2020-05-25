@@ -72,8 +72,6 @@ class Home extends Component{
                                 <p style={{'whiteSpace':'pre-line'}} >
                             {element.noteID.body}
                             </p>
-                            <br />
-                            <br />
                             <Moment className="time" format="D MMM YYYY HH:mm" style={{'fontSize':'10px'}}>{element.updatedAt}</Moment>
                         </div>
                     </NavLink>
@@ -100,7 +98,6 @@ class Home extends Component{
                                     }
                                 })}
                             </ul>
-                            <br />
                             <br />
                             <Moment className="time" format="D MMM YYYY HH:mm" style={{'fontSize':'10px'}}>{element.updatedAt}</Moment>
                         </div>

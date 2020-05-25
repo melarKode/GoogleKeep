@@ -1,22 +1,23 @@
 import React,{Component} from 'react';
 import Axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import './css/NoteDetail.css';
-import TextareaAutosize from 'react-autosize-textarea';
+import './css/ListDetail.css';
 
 class NoteDetail extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             id:'',
             redirectBack:false,
             redirectHome:false,
             data:[],
             title:'',
-            body:'',
+            todo:[],
             deleted: false,
-            archived: false
-        }
+            archived: false,
+            complete:[],
+            incomplete:[]
+        };
     }
 
     handleChange = (e)=>{
@@ -27,14 +28,14 @@ class NoteDetail extends Component{
 
     handleUpdate = (e)=>{
         e.preventDefault();
-        Axios.post('/note/'+this.state.id, this.state)
+        console.log(this.state);
+        Axios.post('/list/'+this.state.id, this.state)
         .then((res)=>{
             this.setState({
                 redirectHome:true
             });
         })
         .catch((err)=>{
-            e.preventDefault();
             console.log(err);
         })
     }
@@ -45,7 +46,7 @@ class NoteDetail extends Component{
             deleted:!(this.state.deleted)
         },()=>{
             if((this.state.deleted)){
-                Axios.delete('/note/'+this.state.id, this.state)
+                Axios.delete('/list/'+this.state.id, this.state)
                 .then((res)=>{
                     this.setState({
                         redirectHome:true
@@ -75,9 +76,8 @@ class NoteDetail extends Component{
         this.setState({
             archived:!(this.state.archived)
         },()=>{
-            Axios.post('/note/'+this.state.id, this.state)
+            Axios.post('/list/'+this.state.id, this.state)
             .then((res)=>{
-                console.log(res);
                 this.setState({
                     redirectHome:true
                 });
@@ -88,11 +88,56 @@ class NoteDetail extends Component{
             })
         });
     }
+
+    handleIncomplete = (e)=>{
+        const { name, value } = e.target
+        var newIncomplete = Array.from(this.state.incomplete)
+        newIncomplete[name] = value
+        this.setState({
+            incomplete: newIncomplete
+        })
+    }
+
+    handleComplete = (e)=>{
+        const { name, value } = e.target
+        var newComplete = Array.from(this.state.complete)
+        newComplete[name] = value
+        this.setState({
+            complete: newComplete
+        })
+    }
+
+    handleCompletion = (e)=>{
+        e.preventDefault();
+        const { name } = e.target
+        var newIncomplete = Array.from(this.state.incomplete);
+        var newComplete = Array.from(this.state.complete);
+        newIncomplete.splice(name,1);
+        newComplete.push(this.state.incomplete[name]);
+        this.setState({
+            incomplete: newIncomplete,
+            complete: newComplete
+        })
+    }
+
+    handleIncompletion = (e)=>{
+        e.preventDefault();
+        const { name, value } = e.target
+        var newIncomplete = Array.from(this.state.incomplete);
+        var newComplete = Array.from(this.state.complete);
+        newIncomplete.push(this.state.complete[name]);
+        newComplete.splice(name,1);
+        this.setState({
+            incomplete: newIncomplete,
+            complete: newComplete
+        })
+    }
+    
     
     componentDidMount(){
-        let id=this.props.match.params.noteid
+        let id=this.props.match.params.listid
         this.setState({id})
-        Axios.get('/note/'+id)
+        Axios.get('/list/'+id)
         .then((res)=>{
             if(res.data['msg']){
                 this.setState({
@@ -101,10 +146,21 @@ class NoteDetail extends Component{
             }else{
                 this.setState({
                     data: res.data,
-                    title:res.data.noteID.title,
-                    body: res.data.noteID.body,
-                    deleted: res.data.noteID.deleted,
+                    title:res.data.listID.title,
+                    todo: res.data.listID.todo,
+                    deleted: res.data.listID.deleted,
                     archived: res.data.archived
+                },()=>{
+                    this.setState({
+                        complete:(this.state.todo.filter(todo=>todo.completed)).map((todo)=>{
+                            return todo.item;
+                        }),
+                        incomplete:(this.state.todo.filter(todo=>!todo.completed)).map((todo)=>{
+                            return todo.item;
+                        })
+                    },()=>{
+                        console.log('mounted');
+                    })
                 })
             }
         })
@@ -115,20 +171,27 @@ class NoteDetail extends Component{
             })
         })
     }
+
     render(){
         return(
-            <div className="noteDetailContainer">
+            <div className="listDetailContainer">
                 <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet" />
                 {this.state.redirectBack && <Redirect push to='/user/login' />}
                 {this.state.redirectHome && <Redirect push to='/home' />}
-                    <form action="/home" method="POST" className="noteDetailForm" onSubmit={this.handleSubmit}>
+                    <form className="noteDetailForm">
                         <input placeholder="Title" type="text" value={this.state.title} name="title" className="noteDetailTitle" onChange={this.handleChange} autoComplete="off"/>
                         <br />
-                        <br />
-
-                        <TextareaAutosize placeholder="Content" value={this.state.body} name="body" className="noteDetailBody" onChange={this.handleChange} autoComplete="off">
-                        <p style={{'white-space':'pre-line'}} />
-                        </TextareaAutosize>
+                        <br />  
+                        <ul className="incompleteTodo">
+                            {this.state.incomplete.map((todo, index)=>{
+                                return <li key={index}><button onClick={this.handleCompletion} name={index}></button><input type="text" value={todo} name={index} onChange={this.handleIncomplete} /></li>
+                            })}
+                        </ul>
+                        <ul className="completeTodo">
+                            {this.state.complete.map((todo,index)=>{
+                                return <li key={index}><button onClick={this.handleIncompletion} name={index}></button><input type="text" value={todo} name={index} onChange={this.handleComplete} /></li>
+                            })}
+                        </ul>
                         <button type="submit" className="buttonUpdate" onClick={this.handleUpdate}>
                             <i className="material-icons-outlined">done</i>
                         </button>

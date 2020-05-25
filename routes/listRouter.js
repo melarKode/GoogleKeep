@@ -60,10 +60,13 @@ router.post('/',checkAuthenticated, (req,res,next)=>{
 })
 
 router.get('/:listid',checkAuthenticated, (req,res,next)=>{
-    List.findById(req.params.listid)
+    Details.findOne({listID: req.params.listid})
+    .populate('listID')
     .exec((err,list)=>{
         if(err){
-            return next(err);
+            res.statusCode = 404;
+            res.setHeader('Content-Type', 'application/json');
+            return res.json({error:'Not Found'});
         }
         res.statusCode = 200;
         res.setHeader('Content-Type','application/json');

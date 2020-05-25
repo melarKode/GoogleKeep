@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Logout from './components/Logout';
 import NoteDetail from './components/NoteDetail';
+import ListDetail from './components/ListDetail';
 
 class App extends Component {
   render() {
@@ -21,6 +22,7 @@ class App extends Component {
       </Switch>
       <Switch>  
           <Route path='/note/:noteid' component={NoteDetail} />
+          <Route path='/list/:listid' component={ListDetail} />
           <Route path='/home' component={Home} />
           <Route path='/note' component={Note} />
           <Route path='/list' component={List} />

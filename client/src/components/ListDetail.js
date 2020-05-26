@@ -16,7 +16,8 @@ class NoteDetail extends Component{
             deleted: false,
             archived: false,
             complete:[],
-            incomplete:[]
+            incomplete:[],
+            newTodo: ''
         };
     }
 
@@ -28,7 +29,6 @@ class NoteDetail extends Component{
 
     handleUpdate = (e)=>{
         e.preventDefault();
-        console.log(this.state);
         Axios.post('/list/'+this.state.id, this.state)
         .then((res)=>{
             this.setState({
@@ -122,7 +122,7 @@ class NoteDetail extends Component{
 
     handleIncompletion = (e)=>{
         e.preventDefault();
-        const { name, value } = e.target
+        const { name } = e.target
         var newIncomplete = Array.from(this.state.incomplete);
         var newComplete = Array.from(this.state.complete);
         newIncomplete.push(this.state.complete[name]);
@@ -132,8 +132,48 @@ class NoteDetail extends Component{
             complete: newComplete
         })
     }
+
+    newTodo = (e)=>{
+        e.preventDefault();
+        var newIncomplete = Array.from(this.state.incomplete);
+        newIncomplete.push(this.state.newTodo);
+        this.setState({
+            incomplete: newIncomplete,
+            newTodo:''
+        });
+    }    
+
+    handleDeleteNote =(e)=>{
+        e.preventDefault();
+        var newIncomplete = Array.from(this.state.incomplete);
+        newIncomplete.splice(e.target.name,1);
+        this.setState({
+            incomplete:newIncomplete
+        })
+    }
+
+    handleDeleteNoteComplete =(e)=>{
+        e.preventDefault();
+        var newComplete = Array.from(this.state.complete);
+        newComplete.splice(e.target.name,1);
+        this.setState({
+            complete:newComplete
+        })
+    }
     
-    
+    handleEnter = (e)=>{
+        if(e.key==="Enter"){
+            const form = e.target.form;
+            const index = Array.prototype.indexOf.call(form, e.target);
+            if(e.target.name==='newTodo'){
+                form.elements[index-1].click();
+            }else{
+                form.elements[index + 3].focus();
+            }
+            e.preventDefault();
+        }
+    }
+
     componentDidMount(){
         let id=this.props.match.params.listid
         this.setState({id})
@@ -158,8 +198,6 @@ class NoteDetail extends Component{
                         incomplete:(this.state.todo.filter(todo=>!todo.completed)).map((todo)=>{
                             return todo.item;
                         })
-                    },()=>{
-                        console.log('mounted');
                     })
                 })
             }
@@ -184,12 +222,15 @@ class NoteDetail extends Component{
                         <br />  
                         <ul className="incompleteTodo">
                             {this.state.incomplete.map((todo, index)=>{
-                                return <li key={index}><button onClick={this.handleCompletion} name={index}></button><input type="text" value={todo} name={index} onChange={this.handleIncomplete} /></li>
+                                return <li key={index}><button className="incompleteButton" onClick={this.handleCompletion} name={index}></button><input type="text" value={todo} name={index} className="todoInput" onChange={this.handleIncomplete} onKeyDown={this.handleEnter} autoComplete="off" /><button className="cancelButton" onClick={this.handleDeleteNote} name={index}></button></li>
                             })}
+                            <li><button className="addTodo" onClick={this.newTodo}></button><input type="text" placeholder="List item" className="newTodo" name="newTodo" value={this.state.newTodo} onChange={this.handleChange} onKeyDown={this.handleEnter} autoComplete="off" /></li>
                         </ul>
+                        <br />
+                        <br />
                         <ul className="completeTodo">
                             {this.state.complete.map((todo,index)=>{
-                                return <li key={index}><button onClick={this.handleIncompletion} name={index}></button><input type="text" value={todo} name={index} onChange={this.handleComplete} /></li>
+                                return <li key={index}><button className="completeButton" onClick={this.handleIncompletion} name={index}></button><input type="text" value={todo} name={index} onChange={this.handleComplete} onKeyDown={this.handleEnter} className="todoInput completeTodoInput" autoComplete="off" /><button className="cancelButton" onClick={this.handleDeleteNoteComplete} name={index}></button></li>
                             })}
                         </ul>
                         <button type="submit" className="buttonUpdate" onClick={this.handleUpdate}>

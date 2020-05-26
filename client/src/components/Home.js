@@ -80,7 +80,7 @@ class Home extends Component{
                     return (
                         <NavLink to={'/list/'+element.listID._id} className="masonry-button" key={element._id} style={{'textDecoration': 'none', 'color':'white'}}>
                         <div className="masonry-list box" key={element.listID._id}>
-                            {element.listID.title}
+                            <span style={{'fontWeight':'bold'}}>{element.listID.title}</span>
                             <br />
                             <br />
                             <ul className="incomplete">{/* eslint-disable-next-line */}

@@ -9,6 +9,8 @@ import Register from './components/Register';
 import Logout from './components/Logout';
 import NoteDetail from './components/NoteDetail';
 import ListDetail from './components/ListDetail';
+import NewNote from './components/NewNote';
+import NewList from './components/NewList';
 
 class App extends Component {
   render() {
@@ -21,6 +23,8 @@ class App extends Component {
         <Navbar />
       </Switch>
       <Switch>  
+          <Route path='/note/new' component={NewNote} />
+          <Route path='/list/new' component={NewList} />
           <Route path='/note/:noteid' component={NoteDetail} />
           <Route path='/list/:listid' component={ListDetail} />
           <Route path='/home' component={Home} />

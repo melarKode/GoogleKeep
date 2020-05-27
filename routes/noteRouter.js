@@ -4,9 +4,20 @@ const Details = require('../models/details');
 const Notes = require('../models/notes');
 
 router.get('/',checkAuthenticated,(req,res,next)=>{
-    res.statusCode=200;
-    res.setHeader('Content-Type','application/json');
-    res.json({'msg':'Notes page'});
+    Details.find({type:'note', deleteDate:null, archived:"false", userID: req.user._id})
+            .populate('noteID')
+            .then((list)=>{
+                res.statusCode = 200;
+                res.setHeader('Content-Type','application/json');
+                res.json(list);
+            })
+            .catch((err)=>{
+                if(err){
+                    res.statusCode=501;
+                    res.setHeader('Content-Type','application/json');
+                    res.json({'err':'Cannot retrieve data'});
+                }
+            })
 })
 
 router.post('/',checkAuthenticated, (req,res,next)=>{

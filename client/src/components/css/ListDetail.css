@@ -5,7 +5,7 @@ ul.completeTodo{
     margin:0px;
 }
 .addTodo{
-    background :url(http://127.0.0.1:5500/client/src/components/css/baseline_add_white_24dp.png);
+    background :url(./baseline_add_white_24dp.png);
     padding: 15px 13px;
     background-repeat: no-repeat;
     background-position-x: center;
@@ -17,7 +17,7 @@ ul.completeTodo{
 }
 
 .incompleteButton{
-    background :url(http://127.0.0.1:5500/client/src/components/css/baseline_check_box_outline_blank_white_24dp.png);
+    background :url(./baseline_check_box_outline_blank_white_24dp.png);
     padding: 15px 13px;
     background-position-x: center;
     background-position-y: center;
@@ -29,7 +29,7 @@ ul.completeTodo{
 }
 
 .completeButton{
-    background: url(http://127.0.0.1:5500/client/src/components/css/baseline_check_box_white_24dp.png);
+    background: url(./baseline_check_box_white_24dp.png);
     padding: 15px 13px;
     background-position-x: center;
     background-position-y: center;
@@ -41,7 +41,7 @@ ul.completeTodo{
 }
 
 .cancelButton{
-    background: url(http://127.0.0.1:5500/client/src/components/css/baseline_clear_white_24dp.png);
+    background: url(./baseline_clear_white_24dp.png);
     padding: 15px 13px;
     background-position-x: center;
     background-position-y: center;

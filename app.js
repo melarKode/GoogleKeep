@@ -5,6 +5,7 @@ const express = require('express');
 http = require('http');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const path = require('path');
 const connect = mongoose.connect(process.env.MONGO_URL, {useUnifiedTopology:true, useNewUrlParser:true, useCreateIndex: true, useFindAndModify:false});
 connect.then((db)=>{
     console.log('Connected to database');
@@ -20,7 +21,7 @@ const listRouter = require('./routes/listRouter');
 const drawRouter = require('./routes/drawRouter');
 const trashRouter = require('./routes/trashRouter');
 const archiveRouter = require('./routes/archiveRouter');
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const app = express();
 
@@ -59,6 +60,14 @@ app.use('/list',listRouter);
 app.use('/draw',drawRouter);
 app.use('/trash',trashRouter);
 app.use('/archive', archiveRouter);
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'));
+
+    app.get('*',(req,res)=>{
+        res.sendFile(path.join(__dirname,'client','build','index.html'));
+    });
+}
 
 app.set('port', port);
 const server = http.createServer(app);

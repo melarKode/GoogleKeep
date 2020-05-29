@@ -18,24 +18,26 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-      <Switch>
-        <Route path='/user/register' component={Register} />
-        <Route path='/user/login' component={Login} />
-        <Route path='/user/logout' component={Logout} />
-        <Navbar />
-      </Switch>
-      <Switch>  
-          <Route path='/note/new' component={NewNote} />
-          <Route path='/list/new' component={NewList} />
-          <Route path='/note/:noteid' component={NoteDetail} />
-          <Route path='/list/:listid' component={ListDetail} />
-          <Route path='/home' component={Home} />
-          <Route path='/archive' component={Archive} />
-          <Route path='/note' component={Note} />
-          <Route path='/list' component={List} />
-          <Route path='/trash' component={Trash} />
-      </Switch>
-      </BrowserRouter>
+  <Route
+    path={['/home', '/archive', '/note', '/list', '/trash']}
+    component={Navbar}
+  />
+  <Switch>
+    <Route path='/user/register' component={Register} />
+    <Route path='/user/login' component={Login} />
+    <Route path='/user/logout' component={Logout} />
+    <Route path='/note/new' component={NewNote} />
+    <Route path='/list/new' component={NewList} />
+    <Route path='/note/:noteid' component={NoteDetail} />
+    <Route path='/list/:listid' component={ListDetail} />
+    <Route path='/home' component={Home} />
+    <Route path='/archive' component={Archive} />
+    <Route path='/note' component={Note} />
+    <Route path='/list' component={List} />
+    <Route path='/trash' component={Trash} />
+    <Route component={Login} />
+  </Switch>
+</BrowserRouter>
     )
   }
 }

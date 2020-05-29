@@ -11,6 +11,8 @@ import NoteDetail from './components/NoteDetail';
 import ListDetail from './components/ListDetail';
 import NewNote from './components/NewNote';
 import NewList from './components/NewList';
+import Archive from './components/Archive';
+import Trash from './components/Trash';
 
 class App extends Component {
   render() {
@@ -28,8 +30,10 @@ class App extends Component {
           <Route path='/note/:noteid' component={NoteDetail} />
           <Route path='/list/:listid' component={ListDetail} />
           <Route path='/home' component={Home} />
+          <Route path='/archive' component={Archive} />
           <Route path='/note' component={Note} />
           <Route path='/list' component={List} />
+          <Route path='/trash' component={Trash} />
       </Switch>
       </BrowserRouter>
     )

@@ -20,6 +20,7 @@ const noteRouter = require('./routes/noteRouter');
 const listRouter = require('./routes/listRouter');
 const drawRouter = require('./routes/drawRouter');
 const trashRouter = require('./routes/trashRouter');
+const archiveRouter = require('./routes/archiveRouter');
 const port = 4000;
 
 const app = express();
@@ -58,6 +59,7 @@ app.use('/note',noteRouter);
 app.use('/list',listRouter);
 app.use('/draw',drawRouter);
 app.use('/trash',trashRouter);
+app.use('/archive', archiveRouter);
 
 app.set('port', port);
 const server = http.createServer(app);

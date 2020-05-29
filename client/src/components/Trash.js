@@ -6,28 +6,26 @@ import Masonry from 'react-masonry-component';
 import Moment from 'react-moment';
 import 'moment-timezone';
 
-class Home extends Component{
+class Trash extends Component{
     constructor(){
         super();
         this.state={
             redirectBack: false,
             notes : [],
-            list : [],
-            noteRedirect: false,
-            listRedirect: false
+            list : []
         }
     }
 
     componentDidMount(){
-        Axios.get('/home')
+        Axios.get('/trash')
         .then((res)=>{
             if(!res.data['msg']){
-                if(res.data['notes'] && res.data['list']){
-                var notes = res.data['notes'].sort((a,b)=>{
-                    return new Date(b.updatedAt)-new Date(a.updatedAt);
+                if(res.data['displayNote'] && res.data['displayList']){
+                var notes = res.data['displayNote'].sort((a,b)=>{
+                    return new Date(b.deleteDate)-new Date(a.deleteDate);
                 })
-                var list = res.data['list'].sort((a,b)=>{
-                    return new Date(b.updatedAt) - new Date(a.updatedAt);
+                var list = res.data['displayList'].sort((a,b)=>{
+                    return new Date(b.deleteDate) - new Date(a.deleteDate);
                 })
                 this.setState({notes, list})
             }
@@ -43,18 +41,6 @@ class Home extends Component{
         console.log(e.target.value);
     }
 
-    noteSubmit = (e)=>{
-        this.setState({
-            noteRedirect:true
-        })
-    }
-
-    listUpdate = (e)=>{
-        this.setState({
-            listRedirect:true
-        })
-    }
-
     render(){
         var data = []/* eslint-disable-next-line */
         this.state.notes.map((note)=>{
@@ -64,24 +50,15 @@ class Home extends Component{
             data.push(list);
         })/* eslint-disable-next-line */
         data = data.sort((a,b)=>{
-            return new Date(b.updatedAt) - new Date(a.updatedAt);
+            return new Date(b.deleteDate) - new Date(a.deleteDate);
         })
         return(
             <div className="container">
                 <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet" />
                 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
                 {this.state.redirectBack && <Redirect push to='/user/login' />}
-                {this.state.noteRedirect && <Redirect push to='/note/new' />}
-                {this.state.listRedirect && <Redirect push to='/list/new' />}
-                <h1 className="home-center">Home</h1>
-                <div className="newTodoRouter">
-                        <button type="submit" className="newNoteIcon" onClick={this.noteSubmit}>
-                            <i className="material-icons-outlined">note</i>
-                        </button>
-                        <button type="submit" className="newListIcon" onClick={this.listUpdate}>
-                            <i className="material-icons-outlined">playlist_add_check</i>
-                        </button>
-                </div>
+                <h1 className="home-center">Trash</h1>
+                <h4 className="home-center">Deleted notes will be permanently deleted after 7 days</h4>
                 <Masonry
                 className={'masonry-home'} 
                 elementType={'ul'}
@@ -97,7 +74,7 @@ class Home extends Component{
                                 <p style={{'whiteSpace':'pre-line'}} >
                             {element.noteID.body}
                             </p>
-                            <Moment className="time" format="D MMM YYYY HH:mm" style={{'fontSize':'10px'}}>{element.updatedAt}</Moment>
+                            <Moment className="time" format="D MMM YYYY HH:mm" style={{'fontSize':'10px'}}>{element.deleteDate}</Moment>
                         </div>
                     </NavLink>
                     );
@@ -124,7 +101,7 @@ class Home extends Component{
                                 })}
                             </ul>
                             <br />
-                            <Moment className="time" format="D MMM YYYY HH:mm" style={{'fontSize':'10px'}}>{element.updatedAt}</Moment>
+                            <Moment className="time" format="D MMM YYYY HH:mm" style={{'fontSize':'10px'}}>{element.deleteDate}</Moment>
                         </div>
                         </NavLink>
                     )
@@ -135,4 +112,4 @@ class Home extends Component{
     }
 }
 
-export default Home;
+export default Trash;

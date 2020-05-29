@@ -29,6 +29,7 @@ class NoteDetail extends Component{
         e.preventDefault();
         Axios.post('/note/'+this.state.id, this.state)
         .then((res)=>{
+            console.log(res);
             this.setState({
                 redirectHome:true
             });
@@ -129,6 +130,7 @@ class NoteDetail extends Component{
                         <TextareaAutosize placeholder="Content" value={this.state.body} name="body" className="noteDetailBody" onChange={this.handleChange} autoComplete="off">
                         <p style={{'white-space':'pre-line'}} />
                         </TextareaAutosize>
+                        
                         <button type="submit" className="buttonUpdate" onClick={this.handleUpdate}>
                             <i className="material-icons-outlined">done</i>
                         </button>
@@ -138,7 +140,6 @@ class NoteDetail extends Component{
                         <button type="submit" className="buttonArchive" onClick={this.handleArchive}>
                             {this.state.archived?<i className="material-icons-outlined">unarchive</i>:<i className="material-icons-outlined">archive</i>}
                         </button>
-                        
                     </form>
             </div>
         )

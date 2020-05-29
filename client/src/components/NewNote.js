@@ -1,4 +1,4 @@
-import React,{Component, useEffect, useMemo, useState} from 'react';
+import React,{Component} from 'react';
 import Axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import './css/NoteDetail.css';
@@ -66,6 +66,8 @@ class NoteDetail extends Component{
                             <i className="material-icons-outlined">done</i>
                         </button>                        
                     </form>
+
+                   
             </div>
         )
     }

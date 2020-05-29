@@ -6,7 +6,7 @@ import Masonry from 'react-masonry-component';
 import Moment from 'react-moment';
 import 'moment-timezone';
 
-class Home extends Component{
+class Archive extends Component{
     constructor(){
         super();
         this.state={
@@ -19,7 +19,7 @@ class Home extends Component{
     }
 
     componentDidMount(){
-        Axios.get('/home')
+        Axios.get('/archive')
         .then((res)=>{
             if(!res.data['msg']){
                 if(res.data['notes'] && res.data['list']){
@@ -73,7 +73,7 @@ class Home extends Component{
                 {this.state.redirectBack && <Redirect push to='/user/login' />}
                 {this.state.noteRedirect && <Redirect push to='/note/new' />}
                 {this.state.listRedirect && <Redirect push to='/list/new' />}
-                <h1 className="home-center">Home</h1>
+                <h1 className="home-center">Archive</h1>
                 <div className="newTodoRouter">
                         <button type="submit" className="newNoteIcon" onClick={this.noteSubmit}>
                             <i className="material-icons-outlined">note</i>
@@ -135,4 +135,4 @@ class Home extends Component{
     }
 }
 
-export default Home;
+export default Archive;

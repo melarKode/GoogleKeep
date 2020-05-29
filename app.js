@@ -6,7 +6,8 @@ http = require('http');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const path = require('path');
-const connect = mongoose.connect(process.env.MONGO_URL, {useUnifiedTopology:true, useNewUrlParser:true, useCreateIndex: true, useFindAndModify:false});
+const MONGO_URL = 'mongodb+srv://test:test@cluster0-awv8j.mongodb.net/test?retryWrites=true&w=majority';
+const connect = mongoose.connect(MONGO_URL, {useUnifiedTopology:true, useNewUrlParser:true, useCreateIndex: true, useFindAndModify:false});
 connect.then((db)=>{
     console.log('Connected to database');
     },(err)=>{
@@ -29,14 +30,15 @@ app.use(logger('dev'));
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const SECRET_KEY = require('crypto').randomBytes(64).toString('hex');
 
 app.use(session({
-    secret: process.env.SECRET_KEY,
+    secret: SECRET_KEY,
     resave:false,
     saveUninitialized: false,
     unset: "destroy",
     store: new MongoStore({
-        url:process.env.MONGO_URL,
+        url:MONGO_URL,
         collection: 'sessions'
     })
 }));

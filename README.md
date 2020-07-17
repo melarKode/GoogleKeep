@@ -10,3 +10,6 @@ npm run dev
 
 
 React app is hosted on PORT 3000.
+
+
+![](googleKeep.gif)
